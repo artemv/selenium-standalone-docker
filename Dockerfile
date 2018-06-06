@@ -36,18 +36,23 @@ RUN apt-get -qqy --no-install-recommends install \
   xfonts-scalable \
   xfonts-cyrillic
 
-RUN useradd -d /home/seleuser -m seleuser
+RUN export DISPLAY=:99.0
+RUN Xvfb :99 -shmem -screen 0 1366x768x16 &
 
-RUN npm install -g selenium-standalone
-RUN selenium-standalone install
+RUN useradd -d /home/testuser -m testuser
+RUN mkdir -p /home/testuser
+RUN chown testuser:testuser /home/testuser
+WORKDIR /home/testuser
+USER testuser
+
+RUN npm install -i selenium-standalone
+RUN ./node_modules/.bin/selenium-standalone install
 
 EXPOSE 4444
 
-RUN export DISPLAY=:99.0
-RUN Xvfb :99 -shmem -screen 0 1366x768x16 &
 RUN google-chrome --version
 RUN firefox --version
 RUN node --version
 RUN npm --version
-USER seleuser
-ENTRYPOINT ["selenium-standalone", "start"]
+
+ENTRYPOINT ["./node_modules/.bin/selenium-standalone", "start"]
