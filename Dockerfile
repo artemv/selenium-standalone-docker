@@ -39,16 +39,24 @@ RUN apt-get -qqy --no-install-recommends install \
 RUN export DISPLAY=:99.0
 RUN Xvfb :99 -shmem -screen 0 1366x768x16 &
 
-RUN useradd -d /home/testuser -m testuser
-RUN mkdir -p /home/testuser
-RUN chown testuser:testuser /home/testuser
-WORKDIR /home/testuser
-COPY package.json .
-RUN npm install
+RUN groupadd --gid 1000 node \
+  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
-USER testuser
+WORKDIR /home/node
+COPY package.json .
+RUN chown -R node .
+ENV NPM_CONFIG_PREFIX=~/.npm-global
+
+USER node
+
+RUN npm install -g npm
+RUN npm install --production --loglevel=warn
+RUN ls -al ./node_modules/selenium-standalone/.selenium
+RUN ls -al ./node_modules/selenium-standalone/.selenium/chromedriver
+
 
 EXPOSE 4444
+
 
 RUN google-chrome --version
 RUN firefox --version

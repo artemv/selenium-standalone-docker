@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Run `selenium-standalone` in a Docker image with the latest Chrome and Firefox.",
   "scripts": {
-    "selenium": "selenium-standalone install && selenium-standalone start",
+    "selenium": "DEBUG=selenium-standalone:* selenium-standalone start",
+    "postinstall": "DEBUG=selenium-standalone:* selenium-standalone install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
