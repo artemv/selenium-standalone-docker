@@ -1,6 +1,9 @@
 FROM ubuntu:latest
 
 LABEL maintainer="Vincent Voyer <vincent@zeroload.net>"
+LABEL description="Docker container for running https://github.com/vvo/selenium-standalone to start the Selenium \
+server and has the latest stable Chrome and Firefox browsers. \
+You can use this container by extending it for use in your own repository where you run E2E tests."
 
 ENV LC_ALL=C
 ENV DEBIAN_FRONTEND=noninteractive
@@ -47,4 +50,4 @@ RUN firefox --version
 RUN node --version
 RUN npm --version
 USER seleuser
-ENTRYPOINT ["selenium-standalone", "start"]
+CMD selenium-standalone start --host 127.0.0.1
