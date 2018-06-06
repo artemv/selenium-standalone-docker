@@ -47,4 +47,4 @@ RUN firefox --version
 RUN node --version
 RUN npm --version
 USER seleuser
-RUN selenium-standalone start
+ENTRYPOINT ["selenium-standalone", "start"]
