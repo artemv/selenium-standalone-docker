@@ -50,4 +50,4 @@ RUN firefox --version
 RUN node --version
 RUN npm --version
 USER seleuser
-CMD selenium-standalone start --host 127.0.0.1
+ENTRYPOINT ["selenium-standalone", "start"]
