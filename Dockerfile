@@ -43,9 +43,10 @@ RUN useradd -d /home/testuser -m testuser
 RUN mkdir -p /home/testuser
 RUN chown testuser:testuser /home/testuser
 WORKDIR /home/testuser
-USER testuser
-
+COPY package.json .
 RUN npm install
+
+USER testuser
 
 EXPOSE 4444
 
@@ -53,5 +54,6 @@ RUN google-chrome --version
 RUN firefox --version
 RUN node --version
 RUN npm --version
+RUN java -version
 
-ENTRYPOINT ["npm", "run selenium"]
+ENTRYPOINT npm run selenium
