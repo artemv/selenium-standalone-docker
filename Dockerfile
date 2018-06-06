@@ -45,8 +45,7 @@ RUN chown testuser:testuser /home/testuser
 WORKDIR /home/testuser
 USER testuser
 
-RUN npm install -i selenium-standalone
-RUN ./node_modules/.bin/selenium-standalone install
+RUN npm install
 
 EXPOSE 4444
 
@@ -55,4 +54,4 @@ RUN firefox --version
 RUN node --version
 RUN npm --version
 
-ENTRYPOINT ["./node_modules/.bin/selenium-standalone", "start"]
+ENTRYPOINT ["npm", "run selenium"]
