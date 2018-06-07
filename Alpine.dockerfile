@@ -8,7 +8,10 @@ server and has the latest stable Chrome and Firefox browsers. \
 You can use this container by extending it for use in your own repository where you run E2E tests."
 
 
-RUN sed -i -e 's/v3\.7/edge/g' /etc/apk/repositories
+RUN echo "http://dl-4.alpinelinux.org/alpine/v3.4/main" >> /etc/apk/repositories && \
+	echo "http://dl-4.alpinelinux.org/alpine/v3.4/community" >> /etc/apk/repositories
+RUN apk update
+
 RUN apk add --update \
   nodejs \
   nodejs-npm \
